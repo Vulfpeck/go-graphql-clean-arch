@@ -19,12 +19,12 @@ func (s *Schema) RootQuery() *graphql.Object {
 			Name: "RootQuery",
 			Fields: graphql.Fields{
 				"Albums": &graphql.Field{
-					Type: graphql.NewList(albumSchema.AlbumGraphQL),
-					//Resolve: s.albumResolver.FetchAlbum,
+					Type:    graphql.NewList(albumSchema.AlbumGraphQL),
+					Resolve: s.albumResolver.FetchAlbum,
 				},
 				"Album": &graphql.Field{
-					Type: albumSchema.AlbumGraphQL,
-					//Resolve: s.albumResolver.FetchAlbumById,
+					Type:    albumSchema.AlbumGraphQL,
+					Resolve: s.albumResolver.FetchAlbumById,
 					Args: graphql.FieldConfigArgument{
 						"id": &graphql.ArgumentConfig{
 							Type: graphql.NewNonNull(graphql.ID),

@@ -2,7 +2,9 @@ package graphql
 
 import (
 	"github.com/graphql-go/graphql"
+	"github.com/mitchellh/mapstructure"
 	"github.com/vulfpeck/go-graphql-test/album"
+	"github.com/vulfpeck/go-graphql-test/models"
 )
 
 type Resolver interface {
@@ -29,5 +31,8 @@ func (r resolver) FetchAlbumById(params graphql.ResolveParams) (interface{}, err
 }
 
 func (r resolver) SaveAlbum(params graphql.ResolveParams) (interface{}, error) {
-	return nil, nil
+	newAlbum := models.Album{}
+	mapstructure.Decode(params.Args["album"], &newAlbum)
+	r.AlbumService.Save(newAlbum)
+	return newAlbum, nil
 }

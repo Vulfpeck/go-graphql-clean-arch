@@ -12,15 +12,22 @@ type inMemoryAlbumRepo struct {
 
 func NewInMemoryAlbumRepo() album.Repository {
 	return &inMemoryAlbumRepo{
-		albums: []models.Album{},
+		albums: []models.Album{
+			{
+				ID:    "1",
+				Title: "asdfasd",
+				Year:  "212",
+				Genre: "asdfasd",
+			},
+		},
 	}
 }
 
-func (i inMemoryAlbumRepo) GetAll() ([]models.Album, error) {
+func (i *inMemoryAlbumRepo) GetAll() ([]models.Album, error) {
 	return i.albums, nil
 }
 
-func (i inMemoryAlbumRepo) FindOne(id string) (models.Album, error) {
+func (i *inMemoryAlbumRepo) FindOne(id string) (models.Album, error) {
 	for _, album := range i.albums {
 		if id == album.ID {
 			return album, nil
@@ -29,7 +36,7 @@ func (i inMemoryAlbumRepo) FindOne(id string) (models.Album, error) {
 	return models.Album{}, errors.New("not found")
 }
 
-func (i inMemoryAlbumRepo) Save(newAlbum models.Album) (models.Album, error) {
+func (i *inMemoryAlbumRepo) Save(newAlbum models.Album) (models.Album, error) {
 	i.albums = append(i.albums, newAlbum)
 	return newAlbum, nil
 }
